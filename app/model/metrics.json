@@ -1,0 +1,12 @@
+{
+  "catboost_mae": 1395.0,
+  "catboost_wmae": 1570.0,
+  "linear_regression_mae": 1720,
+  "linear_regression_wmae": 1851,
+  "test_weeks": 10,
+  "test_start": "2012-08-24",
+  "test_end": "2012-10-26",
+  "n_stores": 45,
+  "n_depts": 80,
+  "n_rows": 395604
+}
