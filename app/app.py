@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -6,6 +7,8 @@ import streamlit as st
 from catboost import CatBoostRegressor
 
 st.set_page_config(page_title="Прогноз продаж Walmart", page_icon="📈", layout="wide")
+
+BASE_DIR = Path(__file__).resolve().parent
 
 NUMERIC_FEATURES = [
     "IsHoliday", "Size", "Temperature", "Fuel_Price", "CPI", "Unemployment",
@@ -20,25 +23,25 @@ FEATURE_COLS = NUMERIC_FEATURES + CAT_FEATURES
 @st.cache_resource
 def load_model():
     model = CatBoostRegressor()
-    model.load_model("model/catboost_model.cbm")
+    model.load_model(str(BASE_DIR / "model" / "catboost_model.cbm"))
     return model
 
 
 @st.cache_data
 def load_data():
-    df = pd.read_parquet("data/processed.parquet")
+    df = pd.read_parquet(BASE_DIR / "data" / "processed.parquet")
     return df
 
 
 @st.cache_data
 def load_metrics():
-    with open("model/metrics.json") as f:
+    with open(BASE_DIR / "model" / "metrics.json") as f:
         return json.load(f)
 
 
 @st.cache_data
 def load_importance():
-    return pd.read_csv("model/feature_importance.csv")
+    return pd.read_csv(BASE_DIR / "model" / "feature_importance.csv")
 
 
 def predict_row(model, row):
